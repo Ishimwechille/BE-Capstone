@@ -1,4 +1,5 @@
 """Budgets app views."""
+import logging
 from rest_framework import viewsets, filters, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -7,6 +8,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.db import models
 from budgets.models import Category, Budget, Goal
 from budgets.serializers import CategorySerializer, BudgetSerializer, GoalSerializer
+
+logger = logging.getLogger(__name__)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -34,9 +37,20 @@ class CategoryViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         """Return user's categories and default categories."""
         user = self.request.user
-        return Category.objects.filter(
+        logger.info(f"📂 CategoryViewSet.get_queryset() called")
+        logger.info(f"   User: {user}")
+        logger.info(f"   Is Authenticated: {user.is_authenticated}")
+        logger.info(f"   User Type: {type(user)}")
+        
+        if not user.is_authenticated:
+            logger.warning(f"   ⚠️ User is not authenticated!")
+            return Category.objects.none()
+        
+        queryset = Category.objects.filter(
             models.Q(user=user) | models.Q(user__isnull=True)
         ).distinct()
+        logger.info(f"   Found {queryset.count()} categories")
+        return queryset
 
     def perform_create(self, serializer):
         """Set the user when creating a category."""
