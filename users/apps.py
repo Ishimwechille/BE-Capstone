@@ -7,5 +7,5 @@ class UsersConfig(AppConfig):
     name = 'users'
 
     def ready(self):
-        """Initialize app signals."""
+        """Initialize app signals.,,,"""
         import users.signals
