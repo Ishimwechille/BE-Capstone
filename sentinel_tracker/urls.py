@@ -2,8 +2,13 @@
 from django.contrib import admin
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+from .views import home, health_check
 
 urlpatterns = [
+    # Home and Health Check
+    path('', home, name='home'),
+    path('health/', health_check, name='health-check'),
+    
     # Admin
     path('admin/', admin.site.urls),
     

@@ -19,4 +19,6 @@ urlpatterns = [
     path('debug/no-auth/', debug_views.test_no_auth, name='debug-no-auth'),
     path('debug/with-auth/', debug_views.test_with_auth, name='debug-with-auth'),
     path('debug/token/', debug_views.debug_token, name='debug-token'),
+    #home url
+    
 ]
