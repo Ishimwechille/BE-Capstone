@@ -65,8 +65,16 @@ WSGI_APPLICATION = 'sentinel_tracker.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'etk',
+        'USER': 'neondb_owner',
+        'PASSWORD': 'npg_qTGIK3A6MamY',
+        'HOST': 'ep-odd-bird-a4kpkpuv-pooler.us-east-1.aws.neon.tech',
+        'PORT': '5432',
+        'CONN_MAX_AGE': 600,
+        'OPTIONS': {
+            'sslmode': 'require',
+        }
     }
 }
 
@@ -165,12 +173,7 @@ SPECTACULAR_SETTINGS = {
 }
 
 # CORS Configuration
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Logging Configuration
 LOGGING = {
